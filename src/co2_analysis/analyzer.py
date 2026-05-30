@@ -6,7 +6,7 @@ class CO2Analyzer:
     Performs basic analysis on CO2 emissions data.
     """
 
-    def __init__(self, dataframe: pd.DataFrame):
+    def _init_(self, dataframe: pd.DataFrame):
         self.dataframe = dataframe
 
     def global_emissions_by_year(self) -> pd.DataFrame:
