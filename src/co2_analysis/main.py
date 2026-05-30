@@ -1,7 +1,7 @@
-from co2_analysis.data_loader import DataLoader
-from co2_analysis.processor import DataProcessor
-from co2_analysis.analyzer import CO2Analyzer
-from co2_analysis.visualizer import CO2Visualizer
+from data_loader import DataLoader
+from processor import DataProcessor
+from analyzer import CO2Analyzer
+from visualizer import CO2Visualizer
 
 
 def main():
@@ -16,7 +16,11 @@ def main():
     top_emitters = analyzer.top_emitters(year=2022)
 
     visualizer = CO2Visualizer()
-    visualizer.plot_global_emissions(global_data)
+    visualizer.plot_all(clean_data)
+    #visualizer.plot_global_emissions(global_data)
+    #visualizer.plot_top_emitters(top_emitters)
+    #visualizer.plot_gdp_vs_co2(clean_data)
+    #visualizer.plot_top_5_time_series(clean_data)
 
     print("Pipeline completed.")
     print(global_data.head())
