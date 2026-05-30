@@ -1,8 +1,0 @@
-__pycache__/
-*.pyc
-.venv/
-venv/
-.DS_Store
-outputs/figures/
-reports/final_report.html
-docs/build/
