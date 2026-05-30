@@ -1,5 +1,6 @@
-import matplotlib.pyplot as plt
+import os
 
+import matplotlib.pyplot as plt
 
 class CO2Visualizer:
     """
@@ -7,10 +8,21 @@ class CO2Visualizer:
     """
 
     def plot_global_emissions(self, dataframe):
+        os.makedirs("outputs/figures", exist_ok=True)
+
+
         plt.figure(figsize=(10, 5))
         plt.plot(dataframe["year"], dataframe["total_co2"])
+
         plt.title("Global CO2 Emissions Over Time")
         plt.xlabel("Year")
         plt.ylabel("CO2 Emissions")
+
         plt.tight_layout()
-        plt.show()
+
+        plt.savefig(
+            "outputs/figures/global_co2_emissions.png",
+            bbox_inches="tight"
+        )
+
+        plt.close()
