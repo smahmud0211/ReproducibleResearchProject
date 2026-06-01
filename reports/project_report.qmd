@@ -1,0 +1,123 @@
+---
+title: "CO2 Global Emissions Analysis"
+author:
+  - Said Mahmud
+  - Sabir Mammadov
+  - Nural Mammadov
+  - Aykhan Safarli
+format:
+  html:
+    toc: true
+    code-fold: true
+---
+
+# Project Goal
+
+This project reproduces an R-based CO2 emissions analysis in Python.
+
+The goal is to create a reproducible workflow that downloads the Our World in Data CO2 dataset, cleans the data, generates visualizations, runs a regression analysis, and produces a final report.
+
+# Dataset
+
+The project uses the Our World in Data CO2 dataset.
+
+The dataset includes information about:
+
+- CO2 emissions
+- CO2 emissions per capita
+- GDP
+- Population
+- Cumulative CO2 emissions
+- Share of global CO2 emissions
+
+# Workflow
+
+The project workflow is:
+
+1. Download the dataset
+2. Clean and prepare the data
+3. Generate visualizations
+4. Run regression analysis
+5. Generate the final report
+
+# Visualizations
+
+## 1. Global Average CO2 per Capita Over Time
+
+![](figures/01_global_average_co2_per_capita.png)
+
+## 2. GDP per Capita vs CO2 per Capita
+
+![](figures/02_gdp_vs_co2_per_capita_latest.png)
+
+## 3. Linear Regression Plot
+
+![](figures/03_linear_regression_co2_pc_gdp_pc.png)
+
+## 4. Top 10 Countries by CO2 per Capita
+
+![](figures/04_top10_co2_per_capita.png)
+
+## 5. CO2 per Capita Over Time for Top 5 Countries
+
+![](figures/05_top5_co2_per_capita_time_series.png)
+
+## 6. CO2 per Capita by GDP Quartile Boxplot
+
+![](figures/06_co2_per_capita_by_gdp_quartile_boxplot.png)
+
+## 7. CO2 per Capita by GDP Quartile Violin Plot
+
+![](figures/07_co2_per_capita_by_gdp_quartile_violin.png)
+
+## 8. Heatmap of Average CO2 per Capita by Year and GDP Quartile
+
+![](figures/08_heatmap_avg_co2_per_capita_by_year_gdp_quartile.png)
+
+## 9. Cumulative Sum of CO2 per Capita
+
+![](figures/09_cumulative_sum_co2_per_capita.png)
+
+## 10. Year-over-Year Change in Global Average CO2 per Capita
+
+![](figures/10_year_over_year_change_global_avg_co2_pc.png)
+
+## 11. CO2 per Capita vs Total CO2 Emissions
+
+![](figures/11_co2_per_capita_vs_total_co2.png)
+
+# Regression Analysis
+
+The regression model estimates the relationship between GDP per capita and CO2 emissions per capita.
+
+```text
+CO2 per capita ~ GDP per capita
+```
+
+The detailed regression output is saved in:
+
+```text
+outputs/tables/regression_summary.txt
+```
+
+The model achieved an R-squared value of approximately 0.556, indicating a moderate positive relationship between GDP per capita and CO2 emissions per capita.
+
+# Conclusion
+
+This project successfully reproduces the main ideas of the original R-based CO2 emissions analysis in Python.
+
+The visualizations show how CO2 emissions per capita differ across countries, GDP groups, and time. The regression analysis demonstrates a positive relationship between GDP per capita and CO2 emissions per capita.
+
+The project is fully reproducible and can be executed locally using:
+
+```bash
+make all
+```
+
+or inside Docker using:
+
+```bash
+docker compose up --build
+```
+
+The Docker container automatically downloads the dataset, cleans the data, generates visualizations, runs the regression analysis, and produces the final report.

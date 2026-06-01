@@ -1,0 +1,6 @@
+services:
+  co2-analysis:
+    build: .
+    volumes:
+      - .:/app
+    command: make all

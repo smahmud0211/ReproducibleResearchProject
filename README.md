@@ -241,6 +241,37 @@ The project was designed to be fully reproducible inside a Docker container.
 
 ---
 
+## Docker Hub Image
+
+The project Docker image is publicly available on Docker Hub:
+
+```text
+aykhansafarli/co2-emissions-python-rr-project:latest
+```
+
+Pull the image:
+
+```bash
+docker pull aykhansafarli/co2-emissions-python-rr-project:latest
+```
+
+Run the image:
+
+```bash
+docker run aykhansafarli/co2-emissions-python-rr-project:latest
+```
+
+The container executes the complete workflow:
+
+* Download the dataset
+* Clean and process the data
+* Generate visualizations
+* Run regression analysis
+* Generate reports
+* Render the Quarto HTML report
+
+---
+
 ## Notebook
 
 A Jupyter notebook is included for exploratory analysis:
