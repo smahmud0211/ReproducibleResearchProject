@@ -1,14 +1,9 @@
 """
 Generate the final project report.
 
-This module creates a Markdown report containing:
-- Project overview
-- Generated visualizations
-- Regression analysis results
-- Final conclusions
-
-The report is automatically generated after the analysis workflow
-and serves as the basis for the project presentation.
+This module defines a ReportGenerator class that creates a Markdown
+report containing project overview, generated visualizations,
+regression analysis results, and final conclusions.
 """
 
 from pathlib import Path
@@ -19,71 +14,125 @@ TABLES_DIR = Path("outputs/tables")
 REPORT_FILE = REPORTS_DIR / "generated_report.md"
 
 
+class ReportGenerator:
+    """
+    Generate a Markdown report from project outputs.
+    """
+
+    def __init__(
+        self,
+        reports_dir: Path = REPORTS_DIR,
+        figures_dir: Path = FIGURES_DIR,
+        tables_dir: Path = TABLES_DIR,
+        report_file: Path = REPORT_FILE,
+    ):
+        """
+        Initialize report input and output paths.
+        """
+        self.reports_dir = reports_dir
+        self.figures_dir = figures_dir
+        self.tables_dir = tables_dir
+        self.report_file = report_file
+
+    def read_regression_summary(self) -> str:
+        """
+        Read the regression summary if it exists.
+
+        Returns:
+            Regression summary text or an empty string.
+        """
+        summary_path = self.tables_dir / "regression_summary.txt"
+
+        if summary_path.exists():
+            return summary_path.read_text()
+
+        return "Regression summary was not found."
+
+    def collect_figures(self) -> list[Path]:
+        """
+        Collect generated figure files.
+
+        Returns:
+            A sorted list of PNG figure paths.
+        """
+        return sorted(self.figures_dir.glob("*.png"))
+
+    def build_report_lines(self) -> list[str]:
+        """
+        Build the Markdown report content.
+
+        Returns:
+            A list of lines that form the Markdown report.
+        """
+        regression_summary = self.read_regression_summary()
+        figures = self.collect_figures()
+
+        report_lines = [
+            "# CO2 Global Emissions Analysis Report",
+            "",
+            "## Project Goal",
+            "",
+            "This project reproduces an R-based CO2 emissions analysis in Python.",
+            "It uses the Our World in Data CO2 dataset and generates visualizations and a regression analysis.",
+            "",
+            "## Dataset",
+            "",
+            "The project uses the Our World in Data CO2 dataset, which includes CO2 emissions, GDP, population, and country-level indicators.",
+            "",
+            "## Generated Figures",
+            "",
+        ]
+
+        for fig in figures:
+            report_lines.append(f"![{fig.stem}](../outputs/figures/{fig.name})")
+            report_lines.append("")
+
+        report_lines.extend(
+            [
+                "## Regression Analysis",
+                "",
+                "The regression model estimates the relationship between GDP per capita and CO2 emissions per capita.",
+                "",
+                "```text",
+                regression_summary,
+                "```",
+                "",
+                "## Conclusion",
+                "",
+                (
+                    "The generated figures and regression results indicate "
+                    "that CO2 emissions per capita are associated with economic "
+                    "development, although the relationship varies across "
+                    "countries and over time."
+                ),
+            ]
+        )
+
+        return report_lines
+
+    def save_report(self) -> None:
+        """
+        Save the generated Markdown report to disk.
+        """
+        self.reports_dir.mkdir(parents=True, exist_ok=True)
+        report_lines = self.build_report_lines()
+        self.report_file.write_text("\n".join(report_lines))
+
+        print(f"Generated report saved to {self.report_file}")
+
+    def run(self) -> None:
+        """
+        Execute the report generation workflow.
+        """
+        self.save_report()
+
+
 def main() -> None:
     """
-    Generate a Markdown report summarizing the project results.
-
-    The report includes:
-    - Project objective
-    - All generated figures
-    - Regression analysis summary
-    - Final conclusions
-
-    Output:
-        reports/generated_report.md
+    Run the report generator.
     """
-    REPORTS_DIR.mkdir(parents=True, exist_ok=True)
-
-    regression_summary_path = TABLES_DIR / "regression_summary.txt"
-
-    regression_summary = ""
-    if regression_summary_path.exists():
-        regression_summary = regression_summary_path.read_text()
-
-    figures = sorted(FIGURES_DIR.glob("*.png"))
-
-    report_lines = [
-        "# CO2 Global Emissions Analysis Report",
-        "",
-        "## Project Goal",
-        "",
-        "This project reproduces an R-based CO2 emissions analysis in Python.",
-        "It uses the Our World in Data CO2 dataset and generates visualizations and a regression analysis.",
-        "",
-        "## Generated Figures",
-        "",
-    ]
-
-    for fig in figures:
-        report_lines.append(
-            f"![{fig.stem}](../outputs/figures/{fig.name})"
-        )
-        report_lines.append("")
-
-    report_lines.extend(
-        [
-            "## Regression Analysis",
-            "",
-            "The regression model estimates the relationship between GDP per capita and CO2 emissions per capita.",
-            "",
-            "```text",
-            regression_summary,
-            "```",
-            "",
-            "## Conclusion",
-            "",
-            (
-                "The generated figures and regression results indicate "
-                "that CO2 emissions per capita are associated with economic "
-                "development, although the relationship varies across "
-                "countries and over time."
-            ),
-        ]
-    )
-
-    REPORT_FILE.write_text("\n".join(report_lines))
-
-    print(f"Generated report saved to {REPORT_FILE}")
+    generator = ReportGenerator()
+    generator.run()
 
 
 if __name__ == "__main__":

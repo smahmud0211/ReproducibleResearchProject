@@ -5,6 +5,10 @@
 This project reproduces an R-based CO2 emissions analysis in Python.
 It uses the Our World in Data CO2 dataset and generates visualizations and a regression analysis.
 
+## Dataset
+
+The project uses the Our World in Data CO2 dataset, which includes CO2 emissions, GDP, population, and country-level indicators.
+
 ## Generated Figures
 
 ![01_global_average_co2_per_capita](../outputs/figures/01_global_average_co2_per_capita.png)
@@ -38,9 +42,9 @@ The regression model estimates the relationship between GDP per capita and CO2 e
 ==============================================================================
 Dep. Variable:                 co2_pc   R-squared:                       0.556
 Model:                            OLS   Adj. R-squared:                  0.553
-Method:                 Least Squares   F-statistic:                     202.7
-Date:                Mon, 01 Jun 2026   Prob (F-statistic):           2.39e-30
-Time:                        01:35:20   Log-Likelihood:                -447.37
+Method:                 Least Squares   F-statistic:                     202.6
+Date:                Mon, 08 Jun 2026   Prob (F-statistic):           2.41e-30
+Time:                        21:10:02   Log-Likelihood:                -447.37
 No. Observations:                 164   AIC:                             898.7
 Df Residuals:                     162   BIC:                             904.9
 Df Model:                           1                                         
@@ -49,11 +53,11 @@ Covariance Type:            nonrobust
                      coef    std err          t      P>|t|      [0.025      0.975]
 ----------------------------------------------------------------------------------
 const              0.5588      0.403      1.387      0.167      -0.237       1.354
-gdp_per_capita     0.0002   1.46e-05     14.236      0.000       0.000       0.000
+gdp_per_capita     0.0002   1.46e-05     14.235      0.000       0.000       0.000
 ==============================================================================
-Omnibus:                       86.261   Durbin-Watson:                   2.080
-Prob(Omnibus):                  0.000   Jarque-Bera (JB):              541.226
-Skew:                           1.835   Prob(JB):                    2.98e-118
+Omnibus:                       86.262   Durbin-Watson:                   2.081
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              541.231
+Skew:                           1.835   Prob(JB):                    2.97e-118
 Kurtosis:                      11.108   Cond. No.                     3.83e+04
 ==============================================================================
 

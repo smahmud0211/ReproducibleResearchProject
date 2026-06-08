@@ -75,7 +75,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="project_report_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="project_report_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="project_report_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="project_report_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="project_report_files/libs/bootstrap/bootstrap-b3be7219b4329ab3935f68f96ee1e395.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -88,8 +88,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#project-goal" id="toc-project-goal" class="nav-link active" data-scroll-target="#project-goal">Project Goal</a></li>
+  <li><a href="#executive-summary" id="toc-executive-summary" class="nav-link active" data-scroll-target="#executive-summary">Executive Summary</a></li>
+  <li><a href="#project-goal" id="toc-project-goal" class="nav-link" data-scroll-target="#project-goal">Project Goal</a></li>
   <li><a href="#dataset" id="toc-dataset" class="nav-link" data-scroll-target="#dataset">Dataset</a></li>
+  <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation">Data Preparation</a></li>
   <li><a href="#workflow" id="toc-workflow" class="nav-link" data-scroll-target="#workflow">Workflow</a></li>
   <li><a href="#visualizations" id="toc-visualizations" class="nav-link" data-scroll-target="#visualizations">Visualizations</a>
   <ul class="collapse">
@@ -105,7 +107,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#year-over-year-change-in-global-average-co2-per-capita" id="toc-year-over-year-change-in-global-average-co2-per-capita" class="nav-link" data-scroll-target="#year-over-year-change-in-global-average-co2-per-capita">10. Year-over-Year Change in Global Average CO2 per Capita</a></li>
   <li><a href="#co2-per-capita-vs-total-co2-emissions" id="toc-co2-per-capita-vs-total-co2-emissions" class="nav-link" data-scroll-target="#co2-per-capita-vs-total-co2-emissions">11. CO2 per Capita vs Total CO2 Emissions</a></li>
   </ul></li>
-  <li><a href="#regression-analysis" id="toc-regression-analysis" class="nav-link" data-scroll-target="#regression-analysis">Regression Analysis</a></li>
+  <li><a href="#regression-analysis" id="toc-regression-analysis" class="nav-link" data-scroll-target="#regression-analysis">Regression Analysis</a>
+  <ul class="collapse">
+  <li><a href="#key-regression-findings" id="toc-key-regression-findings" class="nav-link" data-scroll-target="#key-regression-findings">Key Regression Findings</a></li>
+  </ul></li>
+  <li><a href="#reproducibility" id="toc-reproducibility" class="nav-link" data-scroll-target="#reproducibility">Reproducibility</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
@@ -140,10 +146,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<section id="executive-summary" class="level1">
+<h1>Executive Summary</h1>
+<p>This project reproduces an R-based CO2 emissions analysis in Python using a fully automated and reproducible workflow.</p>
+<p>The project downloads data from the Our World in Data repository, cleans and transforms the dataset, generates visualizations, performs regression analysis, and creates automated reports.</p>
+<p>The results indicate a positive relationship between GDP per capita and CO2 emissions per capita. The regression model shows that GDP per capita explains approximately 56% of the variation in CO2 emissions per capita.</p>
+</section>
 <section id="project-goal" class="level1">
 <h1>Project Goal</h1>
-<p>This project reproduces an R-based CO2 emissions analysis in Python.</p>
-<p>The goal is to create a reproducible workflow that downloads the Our World in Data CO2 dataset, cleans the data, generates visualizations, runs a regression analysis, and produces a final report.</p>
+<p>The goal of this project is to reproduce the main ideas of an existing R-based CO2 emissions analysis in Python.</p>
+<p>The project focuses on:</p>
+<ul>
+<li>Data acquisition</li>
+<li>Data cleaning</li>
+<li>Data visualization</li>
+<li>Regression analysis</li>
+<li>Automated report generation</li>
+<li>Reproducibility using Docker</li>
+</ul>
 </section>
 <section id="dataset" class="level1">
 <h1>Dataset</h1>
@@ -158,81 +178,132 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Share of global CO2 emissions</li>
 </ul>
 </section>
+<section id="data-preparation" class="level1">
+<h1>Data Preparation</h1>
+<p>Before analysis, the raw dataset was cleaned and transformed.</p>
+<p>The following preprocessing steps were performed:</p>
+<ul>
+<li>Observations before 1960 were removed.</li>
+<li>Missing GDP values were removed.</li>
+<li>Missing CO2 per capita values were removed.</li>
+<li>Invalid population records were excluded.</li>
+<li>GDP per capita was calculated.</li>
+<li>Relevant columns were selected and renamed.</li>
+</ul>
+<p>The cleaned dataset was saved as:</p>
+<pre class="text"><code>data/processed/co2_clean.csv</code></pre>
+</section>
 <section id="workflow" class="level1">
 <h1>Workflow</h1>
-<p>The project workflow is:</p>
+<p>The project workflow follows a reproducible pipeline:</p>
 <ol type="1">
 <li>Download the dataset</li>
 <li>Clean and prepare the data</li>
 <li>Generate visualizations</li>
 <li>Run regression analysis</li>
-<li>Generate the final report</li>
+<li>Generate Markdown and HTML reports</li>
+<li>Execute the full workflow inside Docker</li>
 </ol>
 </section>
 <section id="visualizations" class="level1">
 <h1>Visualizations</h1>
 <section id="global-average-co2-per-capita-over-time" class="level2">
 <h2 class="anchored" data-anchor-id="global-average-co2-per-capita-over-time">1. Global Average CO2 per Capita Over Time</h2>
+<p>This figure shows the evolution of average CO2 emissions per capita over time.</p>
 <p><img src="figures/01_global_average_co2_per_capita.png" class="img-fluid"></p>
 </section>
 <section id="gdp-per-capita-vs-co2-per-capita" class="level2">
 <h2 class="anchored" data-anchor-id="gdp-per-capita-vs-co2-per-capita">2. GDP per Capita vs CO2 per Capita</h2>
+<p>This visualization shows the relationship between economic development and carbon emissions. Countries with higher GDP per capita generally tend to emit more CO2 per person.</p>
 <p><img src="figures/02_gdp_vs_co2_per_capita_latest.png" class="img-fluid"></p>
 </section>
 <section id="linear-regression-plot" class="level2">
 <h2 class="anchored" data-anchor-id="linear-regression-plot">3. Linear Regression Plot</h2>
+<p>This plot visualizes the fitted linear relationship between GDP per capita and CO2 emissions per capita.</p>
 <p><img src="figures/03_linear_regression_co2_pc_gdp_pc.png" class="img-fluid"></p>
 </section>
 <section id="top-10-countries-by-co2-per-capita" class="level2">
 <h2 class="anchored" data-anchor-id="top-10-countries-by-co2-per-capita">4. Top 10 Countries by CO2 per Capita</h2>
+<p>This chart highlights the countries with the highest CO2 emissions per person in the latest available data.</p>
 <p><img src="figures/04_top10_co2_per_capita.png" class="img-fluid"></p>
 </section>
 <section id="co2-per-capita-over-time-for-top-5-countries" class="level2">
 <h2 class="anchored" data-anchor-id="co2-per-capita-over-time-for-top-5-countries">5. CO2 per Capita Over Time for Top 5 Countries</h2>
+<p>This figure shows how CO2 emissions per capita changed over time for the top countries in the dataset.</p>
 <p><img src="figures/05_top5_co2_per_capita_time_series.png" class="img-fluid"></p>
 </section>
 <section id="co2-per-capita-by-gdp-quartile-boxplot" class="level2">
 <h2 class="anchored" data-anchor-id="co2-per-capita-by-gdp-quartile-boxplot">6. CO2 per Capita by GDP Quartile Boxplot</h2>
+<p>This boxplot compares emissions across GDP-per-capita quartiles.</p>
 <p><img src="figures/06_co2_per_capita_by_gdp_quartile_boxplot.png" class="img-fluid"></p>
 </section>
 <section id="co2-per-capita-by-gdp-quartile-violin-plot" class="level2">
 <h2 class="anchored" data-anchor-id="co2-per-capita-by-gdp-quartile-violin-plot">7. CO2 per Capita by GDP Quartile Violin Plot</h2>
+<p>This violin plot shows the distribution of CO2 emissions per capita across GDP groups.</p>
 <p><img src="figures/07_co2_per_capita_by_gdp_quartile_violin.png" class="img-fluid"></p>
 </section>
 <section id="heatmap-of-average-co2-per-capita-by-year-and-gdp-quartile" class="level2">
 <h2 class="anchored" data-anchor-id="heatmap-of-average-co2-per-capita-by-year-and-gdp-quartile">8. Heatmap of Average CO2 per Capita by Year and GDP Quartile</h2>
+<p>This heatmap shows how average emissions differ across GDP quartiles and years.</p>
 <p><img src="figures/08_heatmap_avg_co2_per_capita_by_year_gdp_quartile.png" class="img-fluid"></p>
 </section>
 <section id="cumulative-sum-of-co2-per-capita" class="level2">
 <h2 class="anchored" data-anchor-id="cumulative-sum-of-co2-per-capita">9. Cumulative Sum of CO2 per Capita</h2>
+<p>This figure shows the cumulative development of CO2 emissions per capita over time.</p>
 <p><img src="figures/09_cumulative_sum_co2_per_capita.png" class="img-fluid"></p>
 </section>
 <section id="year-over-year-change-in-global-average-co2-per-capita" class="level2">
 <h2 class="anchored" data-anchor-id="year-over-year-change-in-global-average-co2-per-capita">10. Year-over-Year Change in Global Average CO2 per Capita</h2>
+<p>This chart shows annual percentage changes in global average CO2 emissions per capita.</p>
 <p><img src="figures/10_year_over_year_change_global_avg_co2_pc.png" class="img-fluid"></p>
 </section>
 <section id="co2-per-capita-vs-total-co2-emissions" class="level2">
 <h2 class="anchored" data-anchor-id="co2-per-capita-vs-total-co2-emissions">11. CO2 per Capita vs Total CO2 Emissions</h2>
+<p>This visualization compares per-capita emissions with total CO2 emissions.</p>
 <p><img src="figures/11_co2_per_capita_vs_total_co2.png" class="img-fluid"></p>
 </section>
 </section>
 <section id="regression-analysis" class="level1">
 <h1>Regression Analysis</h1>
-<p>The regression model estimates the relationship between GDP per capita and CO2 emissions per capita.</p>
+<p>To quantify the relationship observed in the visualizations, a linear regression model was estimated.</p>
+<p>The model is:</p>
 <pre class="text"><code>CO2 per capita ~ GDP per capita</code></pre>
 <p>The detailed regression output is saved in:</p>
 <pre class="text"><code>outputs/tables/regression_summary.txt</code></pre>
-<p>The model achieved an R-squared value of approximately 0.556, indicating a moderate positive relationship between GDP per capita and CO2 emissions per capita.</p>
+<section id="key-regression-findings" class="level2">
+<h2 class="anchored" data-anchor-id="key-regression-findings">Key Regression Findings</h2>
+<ul>
+<li>The coefficient for GDP per capita is positive.</li>
+<li>The relationship is statistically significant.</li>
+<li>The model achieved an R-squared value of approximately 0.556.</li>
+</ul>
+<p>This means that GDP per capita explains approximately 56% of the variation in CO2 emissions per capita.</p>
+</section>
+</section>
+<section id="reproducibility" class="level1">
+<h1>Reproducibility</h1>
+<p>The project can be reproduced locally using:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> all</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The project can also be reproduced inside Docker using:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose up <span class="at">--build</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The Docker container automatically:</p>
+<ul>
+<li>Downloads the dataset</li>
+<li>Cleans the data</li>
+<li>Generates visualizations</li>
+<li>Runs regression analysis</li>
+<li>Generates the Markdown report</li>
+<li>Renders the Quarto HTML report</li>
+</ul>
+<p>The Docker image is also available on Docker Hub:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> pull aykhansafarli/co2-emissions-python-rr-project:latest</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run aykhansafarli/co2-emissions-python-rr-project:latest</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="conclusion" class="level1">
 <h1>Conclusion</h1>
-<p>This project successfully reproduces the main ideas of the original R-based CO2 emissions analysis in Python.</p>
-<p>The visualizations show how CO2 emissions per capita differ across countries, GDP groups, and time. The regression analysis demonstrates a positive relationship between GDP per capita and CO2 emissions per capita.</p>
-<p>The project is fully reproducible and can be executed locally using:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> all</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>or inside Docker using:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose up <span class="at">--build</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The Docker container automatically downloads the dataset, cleans the data, generates visualizations, runs the regression analysis, and produces the final report.</p>
+<p>This project successfully reproduced the main ideas of an existing R-based CO2 emissions analysis in Python.</p>
+<p>The results suggest that economic development is positively associated with CO2 emissions per capita. The visualizations show substantial variation across countries and over time, while the regression analysis confirms a statistically significant positive relationship between GDP per capita and CO2 emissions per capita.</p>
+<p>The project also demonstrates reproducible research practices through automated workflows, Python scripts, Quarto report generation, GitHub version control, Docker containerization, and Docker Hub deployment.</p>
 </section>
 
 </main>
