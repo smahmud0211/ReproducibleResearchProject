@@ -43,8 +43,8 @@ The regression model estimates the relationship between GDP per capita and CO2 e
 Dep. Variable:                 co2_pc   R-squared:                       0.556
 Model:                            OLS   Adj. R-squared:                  0.553
 Method:                 Least Squares   F-statistic:                     202.6
-Date:                Mon, 08 Jun 2026   Prob (F-statistic):           2.41e-30
-Time:                        21:10:02   Log-Likelihood:                -447.37
+Date:                Wed, 10 Jun 2026   Prob (F-statistic):           2.41e-30
+Time:                        19:23:19   Log-Likelihood:                -447.37
 No. Observations:                 164   AIC:                             898.7
 Df Residuals:                     162   BIC:                             904.9
 Df Model:                           1                                         

@@ -22,5 +22,8 @@ report:
 
 quarto:
 	quarto render reports/project_report.qmd --to html
+	mkdir -p reports
+	@if [ -f project_report.html ]; then mv -f project_report.html reports/project_report.html; fi
+	@if [ -d project_report_files ]; then rm -rf reports/project_report_files && mv project_report_files reports/project_report_files; fi
 
 all: download clean plots analysis report quarto

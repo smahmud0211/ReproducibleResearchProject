@@ -2,9 +2,9 @@
 
 This project is a Python reproduction of the original R-based CO2 Global Emissions Analysis project.
 
-The project downloads the Our World in Data CO2 dataset, cleans and prepares the data, generates visualizations, performs a regression analysis, and produces a final report.
+The project downloads the Our World in Data CO2 dataset, cleans and prepares the data, generates visualizations, performs a regression analysis, and produces a final Quarto HTML report.
 
-The entire workflow is reproducible and can be executed either locally or inside a Docker container.
+The workflow can be reproduced either locally or inside a Docker container.
 
 ---
 
@@ -31,7 +31,6 @@ The dataset contains information about:
 ```text
 co2-emissions-python-RR-Project/
 ├── src/
-│   ├── __init__.py
 │   ├── download_data.py
 │   ├── clean_data.py
 │   ├── plots.py
@@ -73,17 +72,19 @@ python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-Install required packages:
+Install the required Python packages:
 
 ```bash
 pip install -r requirements.txt
 ```
 
+Quarto is also required to render the final HTML report locally.
+
 ---
 
-## Running the Complete Workflow
+## Running the Complete Workflow Locally
 
-Execute the entire project:
+Run the full project workflow:
 
 ```bash
 make all
@@ -92,50 +93,114 @@ make all
 This command automatically:
 
 1. Downloads the dataset
-2. Cleans the data
+2. Cleans and prepares the data
 3. Generates visualizations
 4. Runs the regression analysis
-5. Produces the final report
+5. Generates the report content
+6. Renders the final Quarto HTML report
+
+The final report is saved at:
+
+```text
+reports/project_report.html
+```
 
 ---
 
 ## Running Step by Step
 
-### Download Dataset
+Download the dataset:
 
 ```bash
 python src/download_data.py
 ```
 
-### Clean Data
+Clean the data:
 
 ```bash
 python src/clean_data.py
 ```
 
-### Generate Visualizations
+Generate visualizations:
 
 ```bash
 python src/plots.py
 ```
 
-### Run Regression Analysis
+Run the regression analysis:
 
 ```bash
 python src/analysis.py
 ```
 
-### Generate Markdown Report
+Generate the Markdown report:
 
 ```bash
 python src/generate_report.py
 ```
 
+Render the Quarto HTML report:
+
+```bash
+quarto render reports/project_report.qmd --to html
+```
+
+---
+
+## Running with Docker
+
+Docker can reproduce the complete workflow without installing the Python packages or Quarto directly on the local machine.
+
+First, build the Docker image from the project folder:
+
+```bash
+docker build -t co2-emissions-python-rr .
+```
+
+Then run the complete workflow inside Docker:
+
+```bash
+docker run --rm -v "$(pwd)":/app -w /app co2-emissions-python-rr make all
+```
+
+This command runs the full project workflow:
+
+1. Downloads the dataset
+2. Cleans and prepares the data
+3. Generates figures
+4. Runs the regression analysis
+5. Generates the report
+6. Renders the final HTML file
+
+The generated files are saved in the project folder:
+
+```text
+reports/project_report.html
+outputs/figures/
+outputs/tables/
+```
+
+The `--rm` option removes the temporary Docker container after the workflow finishes.
+
+The `-v "$(pwd)":/app` option connects the current project folder to the Docker container, so the generated outputs are saved back to the local project folder.
+
+The `-w /app` option sets the working directory inside the Docker container.
+
+---
+
+## Running with Docker Compose
+
+The project can also be run with Docker Compose:
+
+```bash
+docker compose up --build
+```
+
+This builds the Docker image and runs the full workflow using the configuration in `docker-compose.yml`.
+
 ---
 
 ## Generated Outputs
-
-### Figures
 
 Generated figures are saved in:
 
@@ -143,7 +208,7 @@ Generated figures are saved in:
 outputs/figures/
 ```
 
-The project generates:
+The project generates visualizations including:
 
 1. Global Average CO2 per Capita Over Time
 2. GDP per Capita vs CO2 per Capita
@@ -157,8 +222,6 @@ The project generates:
 10. Year-over-Year Change in Global Average CO2 per Capita
 11. CO2 per Capita vs Total CO2 Emissions
 
-### Regression Results
-
 Regression outputs are saved in:
 
 ```text
@@ -170,6 +233,12 @@ Files:
 ```text
 regression_summary.txt
 regression_coefficients.csv
+```
+
+The final Quarto report is saved as:
+
+```text
+reports/project_report.html
 ```
 
 ---
@@ -190,85 +259,7 @@ The resulting model achieved:
 R² ≈ 0.556
 ```
 
-indicating a moderate positive relationship between GDP per capita and CO2 emissions per capita.
-
----
-
-## Quarto Report
-
-The project includes a Quarto report summarizing the complete analysis.
-
-Generate the report:
-
-```bash
-quarto render reports/project_report.qmd --to html
-```
-
-The generated report is saved as:
-
-```text
-reports/project_report.html
-```
-
-The report contains:
-
-- Project overview
-- Dataset description
-- Workflow explanation
-- Generated visualizations
-- Regression analysis summary
-- Final conclusions
-
----
-
-## Docker Reproducibility
-
-Build and run the complete workflow inside Docker:
-
-```bash
-docker compose up --build
-```
-
-This command automatically:
-
-1. Downloads the dataset
-2. Cleans the data
-3. Generates all visualizations
-4. Runs the regression analysis
-5. Produces the final report
-
-The project was designed to be fully reproducible inside a Docker container.
-
----
-
-## Docker Hub Image
-
-The project Docker image is publicly available on Docker Hub:
-
-```text
-aykhansafarli/co2-emissions-python-rr-project:latest
-```
-
-Pull the image:
-
-```bash
-docker pull aykhansafarli/co2-emissions-python-rr-project:latest
-```
-
-Run the image:
-
-```bash
-docker run aykhansafarli/co2-emissions-python-rr-project:latest
-```
-
-The container executes the complete workflow:
-
-* Download the dataset
-* Clean and process the data
-* Generate visualizations
-* Run regression analysis
-* Generate reports
-* Render the Quarto HTML report
+This indicates a moderate positive relationship between GDP per capita and CO2 emissions per capita.
 
 ---
 
@@ -308,4 +299,4 @@ This repository contains:
 - Visualizations
 - Documentation
 
-allowing the entire project to be reproduced on any machine with Python or Docker installed.
+Together, these files allow the full project to be reproduced on any machine with either local Python and Quarto installation or Docker.
